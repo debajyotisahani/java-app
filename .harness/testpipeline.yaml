@@ -1,0 +1,37 @@
+pipeline:
+  name: testpipeline
+  identifier: testpipeline
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: demo
+        build: <+input>
+  stages:
+    - stage:
+        name: buildnew
+        identifier: buildnew
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: maven1mage
+                    shell: Sh
+                    command: mvn clean install
+                    imagePullPolicy: Always
